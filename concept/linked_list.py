@@ -14,7 +14,7 @@ class LinkedList:
         self.tail = new_node
         self.length = 1
 
-    def append(self, value):
+    def append(self, value): #O(1)
         new_node = Node(value)
         if self.head is None:
             self.head = new_node
@@ -25,7 +25,7 @@ class LinkedList:
         self.length += 1
         return True
     
-    def pop(self):
+    def pop(self): #O(n)
         if self.length == 0:
             return None
         temp = self.head
@@ -41,7 +41,7 @@ class LinkedList:
             self.tail = None
         return temp.value
 
-    def prepend(self, value):
+    def prepend(self, value): #O(1)
         new_node = Node(value)
         if self.length == 0:
             self.head = new_node
@@ -52,7 +52,7 @@ class LinkedList:
         self.length += 1
         return True
     
-    def pop_first(self):
+    def pop_first(self): #O(1)
         if self.length == 0:
             return None
         temp = self.head
@@ -63,7 +63,7 @@ class LinkedList:
             self.tail = None
         return temp.value
 
-    def get(self, index):
+    def get(self, index): #O(n)
         if index < 0 or index >= self.length:
             return None
         temp = self.head
@@ -78,7 +78,7 @@ class LinkedList:
             return True
         return False
         
-    def insert(self, index, value):
+    def insert(self, index, value): #O(n)
         if index < 0 or index >= self.length:
             return False
         if index == 0:
@@ -92,7 +92,7 @@ class LinkedList:
         self.length += 1
         return True
 
-    def remove(self, index):
+    def remove(self, index): #O(n)
         if index < 0 or index >= self.length:
             return None
         if index == 0:
