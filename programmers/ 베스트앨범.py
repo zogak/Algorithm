@@ -1,37 +1,43 @@
 genres = ["classic", "pop", "classic", "classic", "pop"]
-plays = [500, 600, 150, 800, 2500]
-orderOfGenres = []
+plays = [500, 600, 500, 800, 2500]
 
-from functools import cmp_to_key
 import collections
-def orderByGenre(x, y):
-    return orderOfGenres.index(x[1]) - orderOfGenres.index(y[1])
-
 def solution(genres, plays):
     answer = []
-    musicNums = []
-    for i in range(len(genres)):
-        musicNums.append(i)
-    info = list(zip(musicNums, genres, plays))
-    info.sort(key = lambda x : -x[2])
 
-    numOfGenres = len(set(genres))
-    
-    for i in info:
-        if len(orderOfGenres) == numOfGenres:
-            break
-        if i[1] not in orderOfGenres:
-            orderOfGenres.append(i[1])
-    
-    check = dict(collections.Counter(orderOfGenres))
-    info = sorted(info, key = cmp_to_key(orderByGenre))
-    
-    for i in info:
-        if check[i[1]] >= 3:
+    info = zip(range(len(genres)), genres, plays)
+    info = list(map(list, info))
+    #print(info)
+
+    sortOfGenre = list(set(genres))
+    #print(sortOfGenre)
+    playsByGenre = collections.defaultdict(int)
+    for item in info:
+        playsByGenre[item[1]] += item[2]
+    #print(playsByGenre)
+    sortedGenre = list(map(list, playsByGenre.items()))
+    sortedGenre.sort(key = lambda x : -x[1])
+    #print(sortedGenre)
+
+    genreToNum = dict()
+    for item in sortedGenre:
+        genreToNum[item[0]] = sortedGenre.index(item)
+    #print(genreToNum)
+
+    for item in info:
+        item[1] = genreToNum[item[1]]
+    #print(info)
+    info.sort(key = lambda x : (x[1], -x[2], x[0]))
+    #print(info)
+
+    check = dict.fromkeys(genreToNum.values(), 0)
+    #print(check)
+
+    for item in info:
+        if check[item[1]] == 2:
             continue
-        answer.append(i[0])
-        check[i[1]] += 1
-    
+        answer.append(item[0])
+        check[item[1]] += 1
     return answer
-    
+
 print(solution(genres, plays))
