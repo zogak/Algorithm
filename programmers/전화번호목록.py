@@ -1,5 +1,8 @@
-a = [1, 2, 3, 4, 5]
-b = ['a', 'b', 'c', 'd']
-
-for x, y in zip(a, b):
-    print(x, y)
+phone_book = ["119", "97674223", "1195524421"]
+def solution(phone_book):
+    answer = True
+    phone_book.sort()
+    for num1, num2 in zip(phone_book, phone_book[1:]):
+        if num2.startswith(num1):
+            return False
+    return answer
