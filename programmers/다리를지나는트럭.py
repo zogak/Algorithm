@@ -45,3 +45,34 @@ def solution2(bridge_length, weight, truck_weights):
     return answer
 
 print(solution2(bridge_length, weight, truck_weights))
+
+
+def solution3(bridge_length, weight, truck_weights):
+    answer = 0
+    truck_weights = collections.deque(truck_weights)
+    bridge = collections.deque(maxlen = bridge_length)
+
+    total_weight = 0
+    while truck_weights:
+        answer += 1
+        next = truck_weights[0]
+        
+        if len(bridge) == bridge_length:
+            #if sum(list(bridge)[1:]) + next <= weight:
+            if total_weight - bridge[0] + next <= weight:
+                bridge.append(next)
+                truck_weights.popleft()
+                total_weight = total_weight - bridge[0] + next
+            else:
+                bridge.append(0)
+        
+        else:
+            #if sum(bridge) + next <= weight:
+            if total_weight + next <= weight:
+                bridge.append(next)
+                truck_weights.popleft()
+                total_weight = sum(bridge)
+            else:
+                bridge.append(0)
+    answer += bridge_length
+    return answer
