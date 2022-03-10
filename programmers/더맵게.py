@@ -27,11 +27,12 @@ def solution1(scoville, K):
     answer = 0
     
     scoville = collections.deque(scoville)
-    if len(scoville) == 1:
-        if scoville[0] < K:
-            return -1
-    if len(scoville) == 0 and K != 0:
-        return -1
+    # scoville의 길이가 애초에 2 이상이므로 체크할 필요가 없음.
+    # if len(scoville) == 1:
+    #     if scoville[0] < K:
+    #         return -1
+    # if len(scoville) == 0 and K != 0:
+    #     return -1
     while len(scoville) >= 2:
         # 모두 k 이상인 경우 break
         if all(s >= K for s in scoville):
@@ -45,6 +46,9 @@ def solution1(scoville, K):
         new = cook[0] + cook[1] * 2
         scoville.appendleft(new)
         print(scoville)
+
+        if len(scoville) == 1 and scoville[0] < K:
+            return -1
         
     return answer
 
