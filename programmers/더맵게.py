@@ -38,11 +38,13 @@ def solution1(scoville, K):
         if all(s >= K for s in scoville):
             print('all above')
             break
+        #전체 소트 넣기
         answer += 1
         cook = []
         cook.append(scoville.popleft())
         cook.append(scoville.popleft())
         cook.sort()
+        #cook에 있는 2개만 sort해줄게 아니라, 전체 소트를 해주어야 함.
         new = cook[0] + cook[1] * 2
         scoville.appendleft(new)
         print(scoville)
