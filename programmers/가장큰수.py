@@ -24,4 +24,21 @@ def solution2(numbers):
     print(numbers)
     answer = str(int(''.join(map(str, numbers))))
     return answer
-print(solution2([6, 10, 2]))
+#print(solution2([6, 10, 2]))
+
+def solution3(numbers):
+    answer = ''
+    numbers = list(map(str, numbers))
+    numbers.sort(key = lambda x : x*3, reverse=True)
+    answer = str(int("".join(numbers)))
+    return answer
+print(solution3([3, 30, 34, 5, 9]))
+
+# 문자열 형태 바꾸는 법
+#a = ['1', '2', '3']
+#b = list(map(int, a))
+#print(b)
+
+k = ['3', '30']
+k.sort()
+print(k)
