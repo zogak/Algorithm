@@ -1,29 +1,24 @@
-progresses = [93, 30, 55]
-speeds = [1, 30, 5]
-
-import collections
-def solution(progresses, speeds):
+progresses = [20, 99, 93, 39, 55, 10]
+speeds = [5, 10, 1, 1, 30, 5]
+def solution2(progresses, speeds):
     answer = []
-    days = collections.deque()
+    days = []
     for i, progress in enumerate(progresses):
-        progressLeft = 100 - progress
-        if progressLeft % speeds[i] == 0:
-            days.append(progressLeft // speeds[i])
+        if (100-progress) % speeds[i] != 0:
+            days.append((100-progress)//speeds[i] + 1)
         else:
-            days.append(progressLeft // speeds[i] + 1)
+            days.append((100-progress)//speeds[i])
     
-    current = days.popleft()
-    cnt = 1
-    
-    # while days:
-    #     if current >= days[0]:
-    #         current = days.popleft()
-    #         cnt += 1
-    #     else:
-    #         answer.append(cnt)
-    #         cnt = 1
-    #         current = days.popleft()
-    # answer.append(cnt)
-    # return answer
+    print(days)
+    stack = []
+    for day in days:
+        #커지면
+        if stack and day > max(stack):
+            answer.append(len(stack))
+            stack.clear()
+        stack.append(day)
+    answer.append(len(stack))
+    return answer
 
-print(solution(progresses, speeds))
+print(solution2(progresses, speeds))
+
