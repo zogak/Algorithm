@@ -1,6 +1,7 @@
+# 기준 : 모든 사람이 심사를 끝내는데 걸리는 시간!
 def solution(n, times):
     answer = 0
-    left, right = 1, max(times)*n
+    left, right = min(times), max(times)*n
     while left <= right:
         people = 0
         mid = (left+right)//2
