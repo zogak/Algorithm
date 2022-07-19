@@ -1,62 +1,60 @@
 EAST = 2
 WEST = 6
+CLOCK = 1
+COUNTER_CLOCK = -1
 wheel = [list(map(int, input())) for _ in range(4)]
 k = int(input())
-def rotateEachWheel(wheel, dir):
-    rotated = [0]*8
-    if dir == 1: #clockwise
-        for i, w in enumerate(wheel):
-            rotated[(i+9)%8] = w
-    elif dir == -1: #counter clockwise
-        for i, w in enumerate(wheel):
-            rotated[(i+7)%8] = w
-    return rotated
+command = [list(map(int, input().split())) for _ in range(k)]
 
-def candidate(wheel_num,dir):
-    left_num = wheel_num-1
-    right_num = wheel_num-1
-    left = dir
-    right = dir
-    to_left = []
-    to_right = []
+def getCandidates(wheel_num, dir):
+    leftCandidates = []
+    rightCandidates = []
+    wheel_num_left = wheel_num
+    wheel_num_right = wheel_num
 
-    #좌 인접
-    while (left_num-1) > 0:
-        if wheel[left_num][WEST] == wheel[left_num-1][EAST]:
+    while wheel_num_left-1 > 0:
+        if wheel[wheel_num_left][WEST] == wheel[wheel_num_left-1][EAST]:
             break
         else:
-            to_left.append((left_num, -left))
-            left = -left
-            left_num -= 1
-            
-    
-    #우 인접
-    while (right_num+1) < 4:
-        if wheel[right_num][EAST] == wheel[right_num+1][WEST]:
+            leftCandidates.append((wheel_num_left-1, -dir))
+            dir = -dir
+            wheel_num_left -= 1
+
+    while wheel_num_right+1 < 4:
+        if wheel[wheel_num_right][EAST] == wheel[wheel_num_right+1][WEST]:
             break
         else:
-            to_right.append((right_num, -right))
-            right = -right
-            right_num += 1
+            rightCandidates.append((wheel_num_right+1, -dir))
+            dir = -dir
+            wheel_num_right += 1
     
-    return to_left, to_right
+    return leftCandidates, rightCandidates
 
+def rotateEach(wheelArray, dir):
+    res = [0]*8
+    if dir == CLOCK:
+        for i in range(8):
+            res[(i+1)%8] = wheelArray[i]
+    elif dir == COUNTER_CLOCK:
+        for i in range(8):
+            res[(i-1)%8] = wheelArray[i] 
+    return res
 
-def rotate(wheel_num, dir, l, r):
+def rotate(wheel_num, dir, left, right):
+    wheel[wheel_num] = rotateEach(wheel[wheel_num], dir)
+    for num, d in left:
+        wheel[num] = rotateEach(wheel[num], d)
     
-    # 자기 자신
-    wheel[wheel_num-1] = rotateEachWheel(wheel[wheel_num-1], dir)
+    for num, d in right:
+        wheel[num] = rotateEach(wheel[num], d)
 
-    for item_num, item_dir in l:
-        wheel[item_num] = rotateEachWheel(wheel[item_num], item_dir)
-
-    for item_num, item_dir in r:
-        wheel[item_num] = rotateEachWheel(wheel[item_num], item_dir)
-
-for i in range(k):
-    wheel_num, dir = map(int, input().split())
-    l, r = candidate(wheel_num, dir)
-    rotate(wheel_num, dir, l, r)
+for wheel_num, dir in command:
+    wheel_num -= 1
+    left, right = getCandidates(wheel_num, dir)
+    print('left', left)
+    print('right', right)
+    rotate(wheel_num, dir, left, right)
+    print('after rotate', wheel)
 
 res = 0
 for i, w in enumerate(wheel):
