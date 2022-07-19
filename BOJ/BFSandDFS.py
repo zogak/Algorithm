@@ -13,13 +13,19 @@ from collections import deque
 
 n, m, v = map(int, input().split())
 
-graph = {}
+# graph = {}
+# for i in range(m):
+#     a, b = map(int, input().split())
+#     if graph.get(a) is None:
+#         graph[a] = []
+#     if graph.get(b) is None:
+#         graph[b] = []
+#     graph[a].append(b)
+#     graph[b].append(a)
+
+graph = {i:[] for i in range(1,n+1)}
 for i in range(m):
     a, b = map(int, input().split())
-    if graph.get(a) is None:
-        graph[a] = []
-    if graph.get(b) is None:
-        graph[b] = []
     graph[a].append(b)
     graph[b].append(a)
 
