@@ -8,8 +8,8 @@ dp[0][0] = 1
 
 for i in range(n):
     for j in range(n):
-        if i==n-1 and j==n-1:
-            break
+        # if i==n-1 and j==n-1:
+        #     break
 
         jump = graph[i][j]
         
@@ -30,6 +30,6 @@ for i in range(n):
         #         continue
         
         #     dp[nx][ny] = dp[nx][ny] + 1
-        #print(dp)
+        print(dp)
 
 print(dp[n-1][n-1])
