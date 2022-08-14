@@ -1,7 +1,11 @@
-from itertools import combinations
+from binhex import openrsrc
+from itertools import permutations
+from collections import deque
+
 def solution(expression):
 
     def calculate(operand, num1, num2):
+        res = 0
         if operand == '+':
             res = num1+num2
         elif operand == '-':
@@ -12,38 +16,51 @@ def solution(expression):
             res = num1/num2
         return res
 
-    #숫자와 기호를 분리
-    nums, operands = [],[]
+    #숫자와 기호를 분리, 전체를 리스트로 만들기
+    nums, operands= [],[]
+    whole = deque()
     
     temp = ''
     for char in expression:
         if char.isnumeric():
-            print(char)
             temp += char
         else:
             nums.append(int(temp))
+            whole.append(int(temp))
             operands.append(char)
+            whole.append(char)
             temp = ''
+    nums.append(int(temp))
+    whole.append(int(temp))
+    print('num', nums)
+    print('operands', operands)
+    print('whole', whole)
             
     #기호 우선순위 후보들
     operands_set = list(set(operands))
-    combi = combinations(operands_set, len(operands_set))
+    permu = permutations(operands_set, len(operands_set))
 
     answer = -1e9
-    for com in combi:
-        for item in com:
-            operands_tmp = operands
-            nums_tmp = nums
-            for i, op in enumerate(operands_tmp):
-                if op == item:
-                    op_idx = i*2+1
-                    new_num = calculate(op, nums_tmp[op_idx-1], nums_tmp[op_idx+1])
-                    
-                    # nums_tmp.insert(op_idx+2, new_num)
-                    # nums_tmp.pop(op_idx-1)
-                    # nums_tmp.pop(op_idx+1)
-                    # operands.pop(op_idx)
-        answer = max(answer, abs(operands[0]))
+    for per in permu:
+        stack = []
+        for item in per:
+            print('item', item)
+            while whole:
+                curr = whole.popleft()
+                if curr == item:
+                    stack.append(calculate(item, stack.pop(), whole.popleft()))
+                    print(stack)
+                else:
+                    stack.append(curr)
+                    print(stack)
+            print(stack)
+            print(whole)
+
+            if len(stack)==1:
+                answer = max(answer, stack[0])
+                print('answer', answer)
+            
+
     return answer
 
 print(solution("50*6-3*2"))

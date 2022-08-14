@@ -16,6 +16,7 @@ for i in range(1,a_len+1):
             else:
                 dp[i][j] = dp[i][j-1]
 
+print(dp)
 res = dp[-1][-1]
 print(len(res))
 print(res)
