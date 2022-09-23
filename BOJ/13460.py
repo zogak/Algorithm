@@ -22,7 +22,6 @@ def bfs(rx_start, ry_start, bx_start, by_start):
     q = deque()
     cnt = 1
     q.append((cnt, rx_start, ry_start, bx_start, by_start))
-    #visited = [[rx_start, ry_start, bx_start, by_start]]
 
     while q:
         cnt, rx, ry, bx, by = q.popleft()
@@ -33,21 +32,22 @@ def bfs(rx_start, ry_start, bx_start, by_start):
             nbx = bx + dx[i]
             nby = by + dy[i]
 
-            # 벽인 경우 처리
-            if nrx==0 or nry==0 or nrx==n-1 or nry==m-1:
-                nrx -= dx[i]
-                nry -= dy[i]
-            if nbx==0 or nby==0 or nbx==n-1 or nby==m-1:
-                nbx -= dx[i]
-                nby -= dy[i]
+            # # 벽인 경우 처리
+            # if nrx==0 or nry==0 or nrx==n-1 or nry==m-1:
+            #     nrx -= dx[i]
+            #     nry -= dy[i]
+            # if nbx==0 or nby==0 or nbx==n-1 or nby==m-1:
+            #     nbx -= dx[i]
+            #     nby -= dy[i]
+            print(nrx,nry,nbx,nby)
 
             # 파란 구슬 계속 이동
-            while graph[nbx][nby] == '.' or graph[nbx][nby] == 'R':
+            while graph[nbx][nby] != '#' and graph[nbx][nby] != 'O':
                 nbx = nbx + dx[i]
                 nby = nby + dy[i]
             
             # 벽이나 구멍이 아닐 경우 빨간 구슬 계속 이동 가능
-            while graph[nrx][nry] == '.' or graph[nrx][nry] == 'B':
+            while graph[nrx][nry] != '#' and graph[nrx][nry] != 'O':
                 nrx = nrx + dx[i]
                 nry = nry + dy[i]
                 cnt += 1
@@ -60,6 +60,9 @@ def bfs(rx_start, ry_start, bx_start, by_start):
                     nbx = nbx - dx[i]
                     nby = nby - dy[i]
 
+            print('움직인 후')
+            print('빨간공 위치', nrx, nry)
+            print('파란공 위치', nbx, nby)
 
             if graph[nbx][nby] == 'O':
                 print('blue over')
