@@ -23,8 +23,8 @@ for _ in range(N):
         curve += temp
 
 cnt = 0
-for i in range(101):
-    for j in range(101):
+for i in range(100):
+    for j in range(100):
         if graph[i][j]==1 and graph[i+1][j]==1 and graph[i+1][j+1]==1 and graph[i][j+1]==1:
             cnt += 1
 
