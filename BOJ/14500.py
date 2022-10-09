@@ -4,39 +4,43 @@ graph = [list(map(int, input().split())) for _ in range(n)]
 dx = [-1,0,1,0]
 dy = [0,1,0,-1]
 
-def tetro(x,y):
-    ret = 0
-    cnt = 0
-    visited = set()
+def dfs(i,j):
+    global cnt, value
 
-    while True:
+    if cnt == 4:
+        return True
+
+    for k in range(4):
+        ni = i + dx[k]
+        nj = j + dy[k]
+
+        if ni<0 or nj<0 or ni>=n or nj>=n:
+            continue
+
+        if visited[ni][nj] == 1:
+            continue
+        
         cnt += 1
-        ret += graph[x][y]
-        visited.add((x,y))
-
-        if cnt == 4:
-            return ret
-
-        temp = []
-        for k in range(4):
-            nx = x+ dx[k]
-            ny = y + dy[k]
-
-            if nx<0 or ny<0 or nx>=n or ny>=m:
-                continue
-
-            if (nx,ny) in visited:
-                continue
-
-            temp.append((graph[nx][ny], nx, ny))
-        temp.sort(key = lambda x : x[0], reverse=True)
-        x,y = temp[0][1], temp[0][2]
+        value += graph[ni][nj]
+        dfs(ni,nj)
+        visited[ni][nj] = 0
+        value -= graph[ni][nj]
 
 
+visited = [[0]*m for _ in range(n)]
 res = 0
 for i in range(n):
     for j in range(m):
-        res = max(res, tetro(i,j))
+        value = graph[i][j]
+        cnt = 1
+        visited[i][j] = 1
+        if dfs(i,j):
+            res = max(res, value)
+            visited[i][j] = 0
+        print(res)
+   
+        
+        #res = max(res, tetro(i,j))
 
 #가로
 #위아래 다
