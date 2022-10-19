@@ -34,10 +34,28 @@ def saveTeam(i,j):
             saveTeam(ni,nj)
     return
 
-def move():
-    pass
+def move(teamInfo):
+    global graph
+    for i, info in enumerate(teamInfo):
+        if teamDir[i] == True:
+            teamInfo[i][0] = (teamInfo[i][0]-1)%len(teams[i])
+            teamInfo[i][1] = (teamInfo[i][1]-1)%len(teams[i])
+        else:
+            teamInfo[i][0] = (teamInfo[i][0]+1)%len(teams[i])
+            teamInfo[i][1] = (teamInfo[i][1]+1)%len(teams[i])
+    
+    for i in range(m):
+        for person in teams[i]:
+            if person == teamInfo[i][0]: #head
+                graph[person[0]][person[1]] = 1
+            elif person == teamInfo[i][1]: #tail
+                graph[person[0]][person[1]] = 3
+
+
+
 
 # main
+# 팀 정보 저장
 for i in range(n):
     for j in range(n):
         if graph[i][j] != 0 and visited[i][j] == 0:
@@ -57,4 +75,13 @@ for i in range(n):
             teams.append(team)
             teamInfo.append(info)
 
+#print(teams)
+#print(teamInfo)
+for i, info in enumerate(teamInfo):
+    h = teams[i].index(teamInfo[i][0])
+    t = teams[i].index(teamInfo[i][1])
+    teamInfo[i] = [h,t]
 
+# 라운드 시작
+for round in range(k):
+    pass
