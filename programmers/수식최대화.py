@@ -1,4 +1,3 @@
-from binhex import openrsrc
 from itertools import permutations
 from collections import deque
 
