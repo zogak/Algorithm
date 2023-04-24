@@ -32,3 +32,38 @@ def insertion_sort(my_list):
             my_list[j+1] = my_list[j]
             my_list[j] = temp
             j -= 1
+
+#merge sort
+def mergeLR(x, y):
+    res = []
+    i, j = 0, 0
+    while i < len(x) and j < len(y):
+        if x[i] < y[j]:
+            res.append(x[i])
+            i += 1
+        else:
+            res.append(y[j])
+            j += 1
+        
+    if i == len(x):
+        while j < len(y):
+            res.append(y[j])
+            j += 1
+
+    if j == len(y):
+        while i < len(x):
+            res.append(x[i])
+            i += 1
+
+    return res
+
+def mergeSort(x):
+    if len(x) <= 1:
+        return x
+    
+    mid = len(x)//2
+    left = mergeSort(x[:mid])
+    right = mergeSort(x[mid:])
+
+    res = mergeLR(left, right)
+    return res
