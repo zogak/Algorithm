@@ -24,14 +24,20 @@ def selection_sort(my_list):
 print(selection_sort([4, 2, 6, 5, 1, 3]))
 
 #insertion sort
+# def insertion_sort(my_list):
+#     for i in range(1, len(my_list)):
+#         temp = my_list[i]
+#         j = i-1
+#         while temp < my_list[j] and j > -1:
+#             my_list[j+1] = my_list[j]
+#             my_list[j] = temp
+#             j -= 1
+
 def insertion_sort(my_list):
-    for i in range(1, len(my_list)):
-        temp = my_list[i]
-        j = i-1
-        while temp < my_list[j] and j > -1:
-            my_list[j+1] = my_list[j]
-            my_list[j] = temp
-            j -= 1
+    for i in range(1, len(my_list)): #i로 고른것을
+        for j in range(i, 0, -1): #i앞에 있는 것들과 비교하며 insert하려고 하는 것
+            if my_list[j-1] > my_list[j]:
+                my_list[j-1], my_list[j] = my_list[j], my_list[j-1]
 
 #merge sort
 def mergeLR(x, y):
